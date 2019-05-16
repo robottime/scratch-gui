@@ -10,6 +10,8 @@ import {connect} from 'react-redux';
 
 import StageHeaderComponent from '../components/stage-header/stage-header.jsx';
 
+import ScratchBlocks from 'scratch-blocks';
+
 // eslint-disable-next-line react/prefer-stateless-function
 class StageHeader extends React.Component {
     constructor (props) {
@@ -59,8 +61,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
-    onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    // onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
+    // onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    onOpenPythonEditor: function() {
+        console.log('python');
+    },
+    onOpenArduinoEditor: function() {
+        console.log(ScratchBlocks.Arduino.workspaceToCode(ScratchBlocks.getMainWorkspace()));
+    },
     onSetStageFull: () => dispatch(setFullScreen(true)),
     onSetStageUnFull: () => dispatch(setFullScreen(false))
 });
