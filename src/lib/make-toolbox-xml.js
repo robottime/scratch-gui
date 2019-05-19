@@ -4,6 +4,88 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+const click = function (isStage, targetId) {
+    const stageSelected = ScratchBlocks.ScratchMsgs.translate(
+        'MOTION_STAGE_SELECTED',
+        'Stage selected: no motion blocks'
+    );
+    return `
+    <category name="click" id="click" colour="#4C97FF" secondaryColour="#3373CC">
+        ${isStage ? `
+        <label text="${stageSelected}"></label>
+        ` : `
+        <block type="click_motor_turnleft" id="click_motor_turnleft">
+            <value name="MOTOR">
+                <shadow type="click_motor_menu">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_motor_turnright" id="click_motor_turnright">
+            <value name="MOTOR">
+                <shadow type="click_motor_menu">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_motorspeed_turnleft" id="click_motorspeed_turnleft">
+            <value name="MOTOR">
+                <shadow type="click_motor_menu">
+                </shadow>
+            </value>
+            <value name="PWM">
+                <shadow type="click_pwm">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_motorspeed_turnright" id="click_motorspeed_turnright">
+            <value name="MOTOR">
+                <shadow type="click_motor_menu">
+                </shadow>
+            </value>
+            <value name="PWM">
+                <shadow type="click_pwm">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_ledon" id="click_ledon">
+            <value name="LED">
+                <shadow type="click_led_menu">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_ledoff" id="click_ledoff">
+            <value name="LED">
+                <shadow type="click_led_menu">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_ledset" id="click_ledset">
+            <value name="LED">
+                <shadow type="click_led_menu">
+                </shadow>
+            </value>
+            <value name="PWM">
+                <shadow type="click_pwm">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_touch_sensor" id="click_touch_sensor">
+            <value name="SENSOR">
+                <shadow type="click_sensor_menu">
+                </shadow>
+            </value>
+        </block>
+        <block type="click_infrared_sensor" id="click_touch_sensor">
+            <value name="SENSOR">
+                <shadow type="click_sensor_menu">
+                </shadow>
+            </value>
+        </block>
+        `}
+        ${categorySeparator}
+    </category>
+    `;
+};
+
 const motion = function (isStage, targetId) {
     const stageSelected = ScratchBlocks.ScratchMsgs.translate(
         'MOTION_STAGE_SELECTED',
@@ -732,6 +814,7 @@ const makeToolboxXML = function (isStage, targetId, categoriesXML,
 
     const everything = [
         xmlOpen,
+        click(isStage, targetId), gap,
         motion(isStage, targetId), gap,
         looks(isStage, targetId, costumeName, backdropName), gap,
         sound(isStage, targetId, soundName), gap,

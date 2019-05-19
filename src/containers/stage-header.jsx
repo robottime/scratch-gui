@@ -10,6 +10,8 @@ import {connect} from 'react-redux';
 
 import StageHeaderComponent from '../components/stage-header/stage-header.jsx';
 
+import ScratchBlocks from 'scratch-blocks';
+
 // eslint-disable-next-line react/prefer-stateless-function
 class StageHeader extends React.Component {
     constructor (props) {
@@ -59,8 +61,41 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
-    onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    // onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
+    // onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
+    onOpenPythonEditor: function() {
+        console.log('python');
+    },
+    onOpenArduinoEditor: function() {
+        // console.log(ScratchBlocks.Arduino.workspaceToCode(ScratchBlocks.getMainWorkspace()));
+        var arduinoCode = ScratchBlocks.Arduino.workspaceToCode(ScratchBlocks.getMainWorkspace())
+        console.log(arduinoCode);
+        const shell = window.require('electron').shell;
+        const remote = window.require('electron').remote;
+        const fs = remote.require('fs');
+        const path = remote.require('path');
+        const platform = remote.process.platform;
+        var arduinoTempFile;
+        if (platform == 'win32') {
+            console.log('running on windows');
+            var winPath = 'C:\\ProgramData\\ClickBlocks\\temp';
+            if(!fs.existsSync(winPath)) {
+                fs.mkdirSync('C:\\ProgramData\\ClickBlocks');
+                fs.mkdirSync(winPath);
+            }
+            arduinoTempFile = path.join(winPath, 'temp.ino');
+        }
+        else {
+            console.log('not running on windows');
+            var linuxPath = '/tmp/temp';
+            if(!fs.existsSync(linuxPath)) {
+                fs.mkdirSync(linuxPath);
+            }
+            arduinoTempFile = path.join(linuxPath, 'temp.ino');
+        }
+        fs.writeFileSync(arduinoTempFile, arduinoCode);
+        shell.openItem(arduinoTempFile);
+    },
     onSetStageFull: () => dispatch(setFullScreen(true)),
     onSetStageUnFull: () => dispatch(setFullScreen(false))
 });

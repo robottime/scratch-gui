@@ -70,6 +70,7 @@
 }
 
 [dir="ltr"] .stage-button-first {
+    width: calc(2rem + 10px);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -92,5 +93,6 @@
 }
 
 .stage-button-toggled-off {
-    filter: saturate(0);
+    /* filter: saturate(0); */
+    filter: none;
 }

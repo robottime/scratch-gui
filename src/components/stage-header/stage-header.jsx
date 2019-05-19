@@ -12,8 +12,10 @@ import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
 import fullScreenIcon from './icon--fullscreen.svg';
-import largeStageIcon from './icon--large-stage.svg';
-import smallStageIcon from './icon--small-stage.svg';
+// import largeStageIcon from './icon--large-stage.svg';
+// import smallStageIcon from './icon--small-stage.svg';
+import pythonIcon from './icon--python.svg';
+import arduinoIcon from './icon--arduino.svg';
 import unFullScreenIcon from './icon--unfullscreen.svg';
 
 import scratchLogo from '../menu-bar/scratch-logo.svg';
@@ -52,8 +54,10 @@ const StageHeaderComponent = function (props) {
         isFullScreen,
         isPlayerOnly,
         onKeyPress,
-        onSetStageLarge,
-        onSetStageSmall,
+        // onSetStageLarge,
+        // onSetStageSmall,
+        onOpenPythonEditor,
+        onOpenArduinoEditor,
         onSetStageFull,
         onSetStageUnFull,
         showBranding,
@@ -117,13 +121,15 @@ const StageHeaderComponent = function (props) {
                                 styles.stageButtonFirst,
                                 (stageSizeMode === STAGE_SIZE_MODES.small) ? null : styles.stageButtonToggledOff
                             )}
-                            onClick={onSetStageSmall}
+                            // onClick={onSetStageSmall}
+                            onClick={onOpenArduinoEditor}
                         >
                             <img
                                 alt={props.intl.formatMessage(messages.smallStageSizeMessage)}
                                 className={styles.stageButtonIcon}
                                 draggable={false}
-                                src={smallStageIcon}
+                                // src={smallStageIcon}
+                                src={arduinoIcon}
                             />
                         </Button>
                     </div>
@@ -134,13 +140,15 @@ const StageHeaderComponent = function (props) {
                                 styles.stageButtonLast,
                                 (stageSizeMode === STAGE_SIZE_MODES.large) ? null : styles.stageButtonToggledOff
                             )}
-                            onClick={onSetStageLarge}
+                            // onClick={onSetStageLarge}
+                            onClick={onOpenPythonEditor}
                         >
                             <img
                                 alt={props.intl.formatMessage(messages.largeStageSizeMessage)}
                                 className={styles.stageButtonIcon}
                                 draggable={false}
-                                src={largeStageIcon}
+                                // src={largeStageIcon}
+                                src={pythonIcon}
                             />
                         </Button>
                     </div>
@@ -186,8 +194,10 @@ StageHeaderComponent.propTypes = {
     isPlayerOnly: PropTypes.bool.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onSetStageFull: PropTypes.func.isRequired,
-    onSetStageLarge: PropTypes.func.isRequired,
-    onSetStageSmall: PropTypes.func.isRequired,
+    // onSetStageLarge: PropTypes.func.isRequired,
+    // onSetStageSmall: PropTypes.func.isRequired,
+    onOpenPythonEditor: PropTypes.func.isRequired,
+    onOpenArduinoEditor: PropTypes.func.isRequired,
     onSetStageUnFull: PropTypes.func.isRequired,
     showBranding: PropTypes.bool.isRequired,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
