@@ -67,7 +67,33 @@ const mapDispatchToProps = dispatch => ({
         console.log('python');
     },
     onOpenArduinoEditor: function() {
-        console.log(ScratchBlocks.Arduino.workspaceToCode(ScratchBlocks.getMainWorkspace()));
+        var arduinoCode = ScratchBlocks.Arduino.workspaceToCode(ScratchBlocks.getMainWorkspace())
+        console.log(arduinoCode);
+        const shell = require('electron').shell;
+        const remote = require('electron').remote;
+        const fs = remote.require('fs');
+        const path = remote.require('path');
+        const platform = remote.process.platform;
+        var arduinoTempFile;
+        if (platform == 'win32') {
+            console.log('running on windows');
+            var winPath = 'C:\\ProgramData\\ClickBlocks\\temp';
+            if(!fs.existsSync(winPath)) {
+                fs.mkdirSync('C:\\ProgramData\\ClickBlocks');
+                fs.mkdirSync(winPath);
+            }
+            arduinoTempFile = path.join(winPath, 'temp.ino');
+        }
+        else {
+            console.log('not running on windows');
+            var linuxPath = '/tmp/temp';
+            if(!fs.existsSync(linuxPath)) {
+                fs.mkdirSync(linuxPath);
+            }
+            arduinoTempFile = path.join(linuxPath, 'temp.ino');
+        }
+        fs.writeFileSync(arduinoTempFile, arduinoCode);
+        shell.openItem(arduinoTempFile);
     },
     onSetStageFull: () => dispatch(setFullScreen(true)),
     onSetStageUnFull: () => dispatch(setFullScreen(false))

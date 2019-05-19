@@ -90,6 +90,7 @@ const base = {
             }]
         }]
     },
+    target: 'electron-renderer',
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
@@ -138,6 +139,7 @@ module.exports = [
                 name: 'lib.min'
             }
         },
+        target: 'electron-renderer',
         plugins: base.plugins.concat([
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"',
@@ -216,6 +218,7 @@ module.exports = [
                     }
                 ])
             },
+            target: 'electron-renderer',
             plugins: base.plugins.concat([
                 new CopyWebpackPlugin([{
                     from: 'node_modules/scratch-blocks/media',
